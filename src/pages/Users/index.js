@@ -39,7 +39,7 @@ const Users = (props) => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a href="#" onClick={() => handleView(record.key)}>View</a>
+                    <a onClick={() => handleView(record.key)}>View</a>
                     <a href="#" onClick={() => handleEdit(record.key)}>Edit</a>
                     <Popconfirm
                         title="确认要删除吗?"
