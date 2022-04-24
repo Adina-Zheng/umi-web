@@ -53,12 +53,13 @@ const UserModel = {
         },
         editUser(state, { payload }) {
             const newUserList = JSON.parse(JSON.stringify(state.userList));
+            const { id, name, password, age, address } = payload.userObj
             const userList = newUserList.map(item => {
-                if (item.id === payload.userObj.id) {
-                    item.name = payload.userObj.name;
-                    item.password = payload.userObj.password;
-                    item.age = payload.userObj.age;
-                    item.address = payload.userObj.address;
+                if (item.id === id) {
+                    item.name = name;
+                    item.password = password;
+                    item.age = age;
+                    item.address = address;
                 }
                 return item;
             })

@@ -78,7 +78,6 @@ const UserForm = (props) => {
                     name="basic"
                     labelCol={{ span: 6 }}
                     wrapperCol={{ span: 16 }}
-                    initialValues={{ remember: true }}
                     onFinish={onFinish}
                     autoComplete="off"
                 >

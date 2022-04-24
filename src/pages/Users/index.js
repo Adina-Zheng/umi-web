@@ -40,14 +40,14 @@ const Users = (props) => {
             render: (text, record) => (
                 <Space size="middle">
                     <a onClick={() => handleView(record.key)}>View</a>
-                    <a href="#" onClick={() => handleEdit(record.key)}>Edit</a>
+                    <a onClick={() => handleEdit(record.key)}>Edit</a>
                     <Popconfirm
                         title="确认要删除吗?"
                         onConfirm={(e) => handleDelete(record.key, "delete")}
                         okText="确认"
                         cancelText="取消"
                     >
-                        <a href="#">Delete</a>
+                        <a>Delete</a>
                     </Popconfirm>
 
                 </Space>
