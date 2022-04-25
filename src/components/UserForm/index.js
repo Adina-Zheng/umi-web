@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { Drawer, Form, Button, Input, InputNumber, message } from 'antd';
-import { connect } from 'umi';
+import { useDispatch, useSelector } from 'umi';
 const { TextArea } = Input;
 
 
-const UserForm = (props) => {
+const UserForm = () => {
     const [form] = Form.useForm();
-    // console.log("UserForm组件接收到的props", props)
-    const { dispatch, showDrawer, users, showType, selectedUserObj } = props;
+    const dispatch = useDispatch();
+    const showDrawer = useSelector(state => state.users.showUserForm);
+    const users = useSelector(state => state.users.userList);
+    const showType = useSelector(state => state.users.showUserType);
+    const selectedUserObj = useSelector(state => state.users.selectedUserObj);
 
     const onClose = () => {
         dispatch({
@@ -127,14 +130,4 @@ const UserForm = (props) => {
     )
 };
 
-const mapStateToProps = (state) => {
-    const { showUserForm, userList, showUserType, selectedUserObj } = state.users
-    return {
-        showDrawer: showUserForm,
-        users: userList,
-        showType: showUserType,
-        selectedUserObj
-    }
-}
-
-export default connect(mapStateToProps)(UserForm);
+export default UserForm;

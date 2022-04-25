@@ -1,11 +1,12 @@
 import React from 'react'
 import { Layout, Menu, Card, Form, Input, Button, message } from 'antd';
 import { HomeOutlined, TeamOutlined } from '@ant-design/icons';
-import { connect } from 'umi'
+import { useSelector } from 'umi'
 const { Header, Content } = Layout;
 
 const HomePage = (props) => {
-    const { dispatch, history, loginUser } = props;
+    const { history } = props;
+    const loginUser = useSelector(state => state.home.loginUser);
     const { name, password } = loginUser;
 
     const handleClick = (e) => {
@@ -78,10 +79,4 @@ const HomePage = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        loginUser: state.home.loginUser
-    }
-}
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;

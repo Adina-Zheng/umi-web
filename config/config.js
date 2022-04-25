@@ -7,5 +7,5 @@ export default {
         // disableModelsReExport: true,
         // lazyLoad: true,
     },
-    routes: routes
+    routes
 }

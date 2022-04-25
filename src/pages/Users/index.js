@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Table, Space, Button, Input, Popconfirm, message } from 'antd';
-import { connect } from 'umi';
+import { useDispatch, useSelector } from 'umi';
 import { HomeOutlined, TeamOutlined } from '@ant-design/icons';
 import UserForm from '../../components/UserForm/index'
 
@@ -8,10 +8,12 @@ const { Header, Content } = Layout;
 const { Search } = Input;
 
 const Users = (props) => {
-    // console.log("User组件的props", props);
-    const { history, dispatch, users } = props;
-    let [selectedRowKeys, setselectedRowKeys] = useState([]);
-    const [visible, setVisible] = React.useState(false);
+
+    const { history } = props;
+    const [selectedRowKeys, setselectedRowKeys] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const dispatch = useDispatch();
+    const users = useSelector(state => state.users.userList);
 
     const columns = [
         {
@@ -164,11 +166,4 @@ const Users = (props) => {
     );
 }
 
-const mapStateToProps = (state) => {
-    // 每次状态改变时，都会调用
-    return {
-        users: state.users.userList
-    }
-}
-
-export default connect(mapStateToProps)(Users);
+export default Users;

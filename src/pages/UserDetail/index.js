@@ -1,9 +1,11 @@
 import React from 'react'
 import { Card } from 'antd';
-import { connect } from 'umi';
+import { useSelector } from 'umi';
 
-const UserDetail = (props) => {
-    const { id, name, age, address } = props.selectedUserObj
+const UserDetail = () => {
+
+    const selectedUserObj = useSelector(state => state.users.selectedUserObj)
+    const { id, name, age, address } = selectedUserObj
     return (
         <div>
             <Card title="User Info">
@@ -16,10 +18,4 @@ const UserDetail = (props) => {
     )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        selectedUserObj: state.users.selectedUserObj
-    }
-}
-
-export default connect(mapStateToProps)(UserDetail)
+export default UserDetail
