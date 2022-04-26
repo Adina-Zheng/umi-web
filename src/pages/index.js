@@ -1,13 +1,12 @@
 
 import { Layout, Menu } from 'antd';
-import HomePage from "./Home/index";
+import HomePage from './Home'
 import { HomeOutlined, TeamOutlined } from '@ant-design/icons';
+import { history } from 'umi'
 
 const { Header, Content } = Layout;
 
-export default (props) => {
-
-  const { history } = props
+export default () => {
 
   const handleClick = (e) => {
     history.push(e.key);
@@ -25,7 +24,7 @@ export default (props) => {
         </Menu>
       </Header>
       <Content style={{ padding: '0 50px' }}>
-        {props.children}
+        <HomePage />
       </Content>
     </Layout>
   );
