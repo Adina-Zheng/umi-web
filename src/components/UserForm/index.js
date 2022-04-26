@@ -4,77 +4,55 @@ import { useDispatch, useSelector } from 'umi';
 const { TextArea } = Input;
 
 
-const UserForm = () => {
+const UserForm = (props) => {
+    const { visible, closeForm, record } = props
     const [form] = Form.useForm();
     const dispatch = useDispatch();
-    const showDrawer = useSelector(state => state.users.showUserForm);
-    const users = useSelector(state => state.users.userList);
     const showType = useSelector(state => state.users.showUserType);
-    const selectedUserObj = useSelector(state => state.users.selectedUserObj);
-
-    const onClose = () => {
-        dispatch({
-            type: 'users/closeUserForm',
-        });
-        // 取消需要清除元素值
-        form.setFieldsValue({
-            addr: "",
-            age: "",
-            password: "",
-            username: ""
-        })
-    };
 
     const onFinish = (values) => {
         const userObj = {
-            key: showType === "add" ? String(Math.random()) : selectedUserObj.key,
-            id: showType === "add" ? String(users.length + 1) : selectedUserObj.id,
-            name: values.username,
+            id: record === undefined ? String(Math.random()) : record.id,
+            name: values.name,
             password: values.password,
             age: values.age,
-            address: values.addr,
+            address: values.address,
         }
-        if (showType === "add") {
+        if (record === undefined) {
             dispatch({
                 type: 'users/addUser',
-                payload: { userObj }
+                payload: userObj
             })
             message.success("添加成功！")
         } else {
             dispatch({
                 type: 'users/editUser',
-                payload: { userObj }
+                payload: userObj
             })
             message.success("修改成功！")
         }
         // 添加完需要清除元素值
-        form.setFieldsValue({
-            addr: "",
-            age: "",
-            password: "",
-            username: ""
-        })
+        form.setFieldsValue({})
+        closeForm();
     }
 
     useEffect(() => {
-        if (showType === "edit") {
-            form.setFieldsValue({
-                addr: selectedUserObj.address,
-                age: selectedUserObj.age,
-                password: selectedUserObj.password,
-                username: selectedUserObj.name
-            })
+        if (record === undefined) {
+            form.resetFields();
+        } else {
+            form.setFieldsValue(record);
         }
-    })
+    }, [visible])
 
     return (
         <div>
             <Drawer
-                title={showType === "add" ? 'Add User' : 'Edit User'}
+                title='User Info'
                 width={720}
-                onClose={onClose}
-                visible={showDrawer}
+                onClose={closeForm}
+                visible={visible}
                 bodyStyle={{ paddingBottom: 80 }}
+                forceRender
             >
                 <Form
                     form={form}
@@ -86,7 +64,7 @@ const UserForm = () => {
                 >
                     <Form.Item
                         label="Username"
-                        name="username"
+                        name="name"
                         rules={[{ required: true, message: 'Please input your username!' }]}
                     >
                         <Input placeholder="input username" />
@@ -110,14 +88,14 @@ const UserForm = () => {
 
                     <Form.Item
                         label="Addr"
-                        name="addr"
+                        name="address"
                         rules={[{ required: false, message: 'Please input your address!' }]}
                     >
                         <TextArea placeholder="input address" allowClear />
                     </Form.Item>
 
                     <Form.Item wrapperCol={{ offset: 6, span: 16 }}>
-                        <Button onClick={onClose} style={{ marginRight: '20px' }}>
+                        <Button onClick={closeForm} style={{ marginRight: '20px' }}>
                             Cancel
                         </Button>
                         <Button type="primary" htmlType="submit">

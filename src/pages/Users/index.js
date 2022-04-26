@@ -10,8 +10,12 @@ const { Search } = Input;
 const Users = (props) => {
 
     const { history } = props;
+
     const [selectedRowKeys, setselectedRowKeys] = useState([]);
     const [visible, setVisible] = useState(false);
+    const [showUserForm, setshowUserForm] = useState(false);
+    const [record, setRecord] = useState(undefined);
+
     const dispatch = useDispatch();
     const users = useSelector(state => state.users.userList);
 
@@ -41,11 +45,11 @@ const Users = (props) => {
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
-                    <a onClick={() => handleView(record.key)}>View</a>
-                    <a onClick={() => handleEdit(record.key)}>Edit</a>
+                    <a onClick={() => handleView(record)}>View</a>
+                    <a onClick={() => handleEdit(record)}>Edit</a>
                     <Popconfirm
                         title="确认要删除吗?"
-                        onConfirm={(e) => handleDelete(record.key, "delete")}
+                        onConfirm={(e) => handleDelete(record.id, "delete")}
                         okText="确认"
                         cancelText="取消"
                     >
@@ -63,11 +67,9 @@ const Users = (props) => {
         }
         setVisible(true);
     };
-    const handleCancel = () => {
-        setVisible(false);
-    };
-    const handleClick = (e) => {
-        history.push(e.key);
+    const handleAdd = () => {
+        setshowUserForm(true);
+        setRecord(undefined);
     }
     const rowSelection = {
         selectedRowKeys,
@@ -76,16 +78,9 @@ const Users = (props) => {
         },
     };
     const onSearch = (value) => {
-        console.log("onSearch", value);
         dispatch({
             type: 'users/searchUser',
             payload: value
-        })
-    }
-    const handleAdd = () => {
-        dispatch({
-            type: 'users/showUserForm',
-            payload: { showUserType: 'add' }
         })
     }
     const handleDelete = (key, type) => {
@@ -95,20 +90,15 @@ const Users = (props) => {
             payload: { key, type }
         })
     }
-    const handleEdit = (key) => {
-        const editUser = users.filter(item => item.key === key);
-        dispatch({
-            type: 'users/showUserForm',
-            payload: { showUserType: 'edit', editUser }
-        })
+    const handleEdit = (record) => {
+        setshowUserForm(true);
+        setRecord(record);
     }
-    const handleView = (key) => {
-        const showUser = users.filter(item => item.key === key);
-        dispatch({
-            type: 'users/showDetail',
-            payload: showUser
-        })
-        history.push("/users/detail");
+    const handleView = (record) => {
+        history.push({
+            pathname: '/users/detail',
+            state: record
+        });
     }
 
     useEffect(() => {
@@ -120,7 +110,7 @@ const Users = (props) => {
     return (
         <Layout>
             <Header>
-                <Menu theme="dark" mode="horizontal" onClick={handleClick}>
+                <Menu theme="dark" mode="horizontal" onClick={e => { history.push(e.key) }}>
                     <Menu.Item key="home" icon={<HomeOutlined />}>
                         Home
                     </Menu.Item>
@@ -139,7 +129,7 @@ const Users = (props) => {
                             title="确认删除所选项吗？"
                             visible={visible}
                             onConfirm={() => { handleDelete(selectedRowKeys, "batchDelete") }}
-                            onCancel={handleCancel}
+                            onCancel={() => { setVisible(false) }}
                             okText="确认"
                             cancelText="取消"
                         >
@@ -153,13 +143,13 @@ const Users = (props) => {
                         rowSelection={rowSelection}
                         columns={columns}
                         dataSource={users}
+                        rowKey="id"
                         pagination={{
-                            pageSize: 5,
-
+                            pageSize: 5
                         }}
                     />
                 </div>
-                <UserForm />
+                <UserForm visible={showUserForm} record={record} closeForm={() => { setshowUserForm(false) }} />
             </Content>
         </Layout>
 

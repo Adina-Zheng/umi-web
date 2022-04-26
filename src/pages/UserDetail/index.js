@@ -1,11 +1,10 @@
 import React from 'react'
 import { Card } from 'antd';
-import { useSelector } from 'umi';
 
-const UserDetail = () => {
+const UserDetail = (props) => {
 
-    const selectedUserObj = useSelector(state => state.users.selectedUserObj)
-    const { id, name, age, address } = selectedUserObj
+    const { id, name, age, address } = props.location.state
+
     return (
         <div>
             <Card title="User Info">

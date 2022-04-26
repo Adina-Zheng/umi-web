@@ -1,7 +1,6 @@
 export const getUserList = async params => {
     const data = [
         {
-            key: '1',
             id: "1",
             name: 'John Brown',
             password: '01Brown',
@@ -9,7 +8,6 @@ export const getUserList = async params => {
             address: 'New York No. 1 Lake Park',
         },
         {
-            key: '2',
             id: "2",
             name: 'Jim Green',
             password: '02Green',
@@ -17,7 +15,6 @@ export const getUserList = async params => {
             address: 'London No. 1 Lake Park',
         },
         {
-            key: '3',
             id: "3",
             name: 'Joe Black',
             password: '03Black',
@@ -25,7 +22,6 @@ export const getUserList = async params => {
             address: 'Sidney No. 1 Lake Park',
         },
         {
-            key: '4',
             id: "4",
             name: 'John Blue',
             password: '04Blue',
@@ -33,7 +29,6 @@ export const getUserList = async params => {
             address: 'New York No. 1 Lake Park',
         },
         {
-            key: '5',
             id: "5",
             name: 'Jim Red',
             password: '05Red',
@@ -41,7 +36,6 @@ export const getUserList = async params => {
             address: 'London No. 1 Lake Park',
         },
         {
-            key: '6',
             id: "6",
             name: 'Joe Yellow',
             password: '06Yellow',

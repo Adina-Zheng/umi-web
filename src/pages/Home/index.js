@@ -9,10 +9,6 @@ const HomePage = (props) => {
     const loginUser = useSelector(state => state.home.loginUser);
     const { name, password } = loginUser;
 
-    const handleClick = (e) => {
-        history.push(e.key);
-    }
-
     const onFinish = (values) => {
         if (values.username === name && values.password === password) {
             history.push("/users");
@@ -24,14 +20,10 @@ const HomePage = (props) => {
         }
     };
 
-    const onFinishFailed = (errorInfo) => {
-        message.warn("登录失败!");
-    };
-
     return (
         <Layout className="layout">
             <Header>
-                <Menu theme="dark" mode="horizontal" onClick={handleClick}>
+                <Menu theme="dark" mode="horizontal" onClick={e => { history.push(e.key) }}>
                     <Menu.Item key="home" icon={<HomeOutlined />}>
                         Home
                     </Menu.Item>
@@ -48,7 +40,7 @@ const HomePage = (props) => {
                         wrapperCol={{ span: 16 }}
                         initialValues={{ remember: true }}
                         onFinish={onFinish}
-                        onFinishFailed={onFinishFailed}
+                        onFinishFailed={() => { message.warn("登录失败!") }}
                         autoComplete="off"
                     >
                         <Form.Item
@@ -75,7 +67,7 @@ const HomePage = (props) => {
                     </Form>
                 </Card>
             </Content>
-        </Layout>
+        </Layout >
     )
 }
 
