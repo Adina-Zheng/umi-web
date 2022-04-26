@@ -21,7 +21,7 @@ const UserModel = {
     },
 
     effects: {
-        * getUserList({ call, put }) {
+        * getUserList(action, { call, put }) {
             const data = yield call(getUserList);
             yield put({
                 type: 'getUsers',
