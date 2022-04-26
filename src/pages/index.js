@@ -25,7 +25,7 @@ export default (props) => {
         </Menu>
       </Header>
       <Content style={{ padding: '0 50px' }}>
-        <HomePage />
+        {props.children}
       </Content>
     </Layout>
   );

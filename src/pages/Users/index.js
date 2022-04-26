@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Layout, Menu, Table, Space, Button, Input, Popconfirm, message } from 'antd';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Table, Space, Button, Input, Popconfirm, message } from 'antd';
 import { useDispatch, useSelector } from 'umi';
-import { HomeOutlined, TeamOutlined } from '@ant-design/icons';
 import UserForm from '../../components/UserForm/index'
 
-const { Header, Content } = Layout;
 const { Search } = Input;
 
 const Users = (props) => {
@@ -108,50 +106,38 @@ const Users = (props) => {
     }, [])
 
     return (
-        <Layout>
-            <Header>
-                <Menu theme="dark" mode="horizontal" onClick={e => { history.push(e.key) }}>
-                    <Menu.Item key="home" icon={<HomeOutlined />}>
-                        Home
-                    </Menu.Item>
-                    <Menu.Item key="users" icon={<TeamOutlined />}>
-                        Users
-                    </Menu.Item>
-                </Menu>
-            </Header>
-            <Content style={{ padding: '0 50px' }}>
-                <div className="list-table">
-                    <div style={{ marginBottom: '10px' }}>
-                        <Button type="primary" onClick={handleAdd} className="header-button">
-                            Add
+        <Fragment>
+            <div className="list-table">
+                <div style={{ marginBottom: '10px' }}>
+                    <Button type="primary" onClick={handleAdd} className="header-button">
+                        Add
+                    </Button>
+                    <Popconfirm
+                        title="确认删除所选项吗？"
+                        visible={visible}
+                        onConfirm={() => { handleDelete(selectedRowKeys, "batchDelete") }}
+                        onCancel={() => { setVisible(false) }}
+                        okText="确认"
+                        cancelText="取消"
+                    >
+                        <Button type="primary" className="header-button" onClick={() => showPopconfirm(selectedRowKeys)}>
+                            BatchDelete
                         </Button>
-                        <Popconfirm
-                            title="确认删除所选项吗？"
-                            visible={visible}
-                            onConfirm={() => { handleDelete(selectedRowKeys, "batchDelete") }}
-                            onCancel={() => { setVisible(false) }}
-                            okText="确认"
-                            cancelText="取消"
-                        >
-                            <Button type="primary" className="header-button" onClick={() => showPopconfirm(selectedRowKeys)}>
-                                BatchDelete
-                            </Button>
-                        </Popconfirm>
-                        <Search placeholder="input search text" onSearch={onSearch} enterButton className="header-button" style={{ width: '50%' }} />
-                    </div>
-                    <Table
-                        rowSelection={rowSelection}
-                        columns={columns}
-                        dataSource={users}
-                        rowKey="id"
-                        pagination={{
-                            pageSize: 5
-                        }}
-                    />
+                    </Popconfirm>
+                    <Search placeholder="input search text" onSearch={onSearch} enterButton className="header-button" style={{ width: '50%' }} />
                 </div>
-                <UserForm visible={showUserForm} record={record} closeForm={() => { setshowUserForm(false) }} />
-            </Content>
-        </Layout>
+                <Table
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={users}
+                    rowKey="id"
+                    pagination={{
+                        pageSize: 5
+                    }}
+                />
+            </div>
+            <UserForm visible={showUserForm} record={record} closeForm={() => { setshowUserForm(false) }} />
+        </Fragment>
 
     );
 }

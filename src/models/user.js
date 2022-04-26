@@ -3,8 +3,7 @@ import { getUserList } from '../services/userService'
 const UserModel = {
     namespace: "users",
     state: {
-        userList: [],
-        showDetail: false
+        userList: []
     },
 
     reducers: {
