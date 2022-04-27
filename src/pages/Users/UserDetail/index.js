@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card } from 'antd';
+import { Helmet } from 'umi'
 
 const UserDetail = (props) => {
 
@@ -7,6 +8,10 @@ const UserDetail = (props) => {
 
     return (
         <div>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>User detail</title>
+            </Helmet>
             <Card title="User Info">
                 <p><span style={{ fontWeight: 'bold' }}>ID: </span>{id}</p>
                 <p><span style={{ fontWeight: 'bold' }}>Name：</span>{name}</p>
