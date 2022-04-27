@@ -7,7 +7,7 @@ const UserDetail = (props) => {
     const { id, name, age, address } = props.location.state
 
     return (
-        <div>
+        <div style={{ marginTop: '5%' }}>
             <Helmet>
                 <meta charSet="utf-8" />
                 <title>User detail</title>

@@ -9,11 +9,12 @@
   },
   "dependencies": {
     "antd": "^4.18.0",
-    "umi": "^3.5.20",
     "react": "^16.14.0",
-    "react-dom": "^16.14.0"
+    "react-dom": "^16.14.0",
+    "umi": "^3.5.20"
   },
   "devDependencies": {
+    "@umijs/plugin-qiankun": "^2.37.2",
     "@umijs/preset-react": "^2.1.0",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.4.0",
